@@ -2,7 +2,6 @@ import { Registry } from 'monaco-textmate';
 import { wireTmGrammars } from 'monaco-editor-textmate';
 import * as monaco from 'monaco-editor';
 import jassGrammar from './syntaxes/jass.tmlanguage.json'
-import { loadWASM } from "onigasm";
 
 const grammars = new Map([['jass', 'source.jass']]);
 const content = JSON.stringify(jassGrammar)
@@ -17,13 +16,6 @@ const registry = new Registry({
         };
     },
 });
-
-/**
- * @param {string} wasmPath.
- */
-export async function setJassWASMPath(wasmPath) {
-    await loadWASM(wasmPath)
-}
 
 /**
  * @param { editor.IStandaloneCodeEditor } [editor]
