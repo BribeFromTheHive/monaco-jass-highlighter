@@ -5,12 +5,7 @@ import jassGrammar from './syntaxes/jass.tmlanguage.json'
 import { loadWASM } from "onigasm";
 
 /**
- * Initializes and sets up JASS highlighting for Monaco.
- *
- * @function
- * @async
- * @param {string} wasmPath - The path to the onigasm WebAssembly binary.
- * @returns {Promise<void>} A promise that resolves when setup is complete.
+ * @param {string} wasmPath.
  */
 export async function setupJass(wasmPath) {
     await loadWASM(wasmPath)
