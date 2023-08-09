@@ -8,6 +8,8 @@ import { loadWASM } from "onigasm";
  * @param {string} wasmPath.
  */
 export async function setupJass(wasmPath) {
+    monaco.languages.register({ id: 'jass' });
+
     await loadWASM(wasmPath)
 
     const registry = new Registry({
