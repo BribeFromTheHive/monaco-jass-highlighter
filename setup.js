@@ -12,12 +12,15 @@ export async function setupJass(wasmPath) {
 
     await loadWASM(wasmPath)
 
+    const content = JSON.stringify(jassGrammar)
+    console.log(content);
+
     const registry = new Registry({
         getGrammarDefinition: async (scopeName) => {
             if (scopeName === 'source.jass') {
                 return {
                     format: 'json',
-                    content: JSON.stringify(jassGrammar),
+                    content,
                 };
             }
         },
