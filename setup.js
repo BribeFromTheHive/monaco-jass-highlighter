@@ -4,27 +4,30 @@ import * as monaco from 'monaco-editor';
 import jassGrammar from './syntaxes/jass.tmlanguage.json'
 import { loadWASM } from "onigasm";
 
+const grammars = new Map([['jass', 'source.jass']]);
+const content = JSON.stringify(jassGrammar)
+
+monaco.languages.register({ id: 'jass' });
+
+const registry = new Registry({
+    getGrammarDefinition: async () => {
+        return {
+            format: 'json',
+            content,
+        };
+    },
+});
+
 /**
  * @param {string} wasmPath.
  */
-export async function setupJass(wasmPath) {
-    monaco.languages.register({ id: 'jass' });
-
+export async function setJassWASMPath(wasmPath) {
     await loadWASM(wasmPath)
+}
 
-    const content = JSON.stringify(jassGrammar)
-    console.log(content);
-
-    const registry = new Registry({
-        getGrammarDefinition: async (scopeName) => {
-            if (scopeName === 'source.jass') {
-                return {
-                    format: 'json',
-                    content,
-                };
-            }
-        },
-    });
-
-    await wireTmGrammars(monaco, registry, new Map([['jass', 'source.jass']]));
+/**
+ * @param { editor.IStandaloneCodeEditor } [editor]
+ */
+export async function wireJASSTmGrammars(editor) {
+    await wireTmGrammars(monaco, registry, grammars, editor);
 }
